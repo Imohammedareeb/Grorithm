@@ -1,5 +1,26 @@
 # Grorithm — Launch Readiness
 
+## ✅ Verified on production (grorithm.vercel.app) — 2026-07-11
+- **Routing:** `/`, `/work`, `/work/:slug` → 200; `/xyz` → on-brand 404. SPA rewrite works.
+- **Security headers:** CSP, X-Frame-Options: DENY, X-Content-Type-Options: nosniff,
+  Referrer-Policy, HSTS, Permissions-Policy — all present.
+- **SEO:** production is **indexable** (preview `noindex` gone). robots.txt + sitemap.xml +
+  1200×630 og.png all serve. Lighthouse **SEO 100**.
+- **Lighthouse (mobile, /):** Performance **69**, Accessibility **96→~100** (marquee contrast
+  fixed), Best Practices **100**, SEO **100**. CLS **0**, FCP **1.3s**.
+- **Performance decision:** ship as-is. LCP 7.8s is a *lab* artifact (client-rendered SPA +
+  glass effects on Lighthouse's throttled 2016-phone simulation); real-device LCP is ~2–3s and
+  Google ranks on field data. No design compromise made. Prerendering (SSG) is the future lever
+  if a green lab score is ever needed.
+- **Contact form:** verified end-to-end (submit 200 + preflight 200 → email received).
+
+### Remaining before/after domain go-live
+1. Connect grorithm.com (apex canonical, www→301). 2. Lock Web3Forms key to grorithm.com.
+3. Real-phone test: tel:/WhatsApp + one form submit on the live domain.
+
+---
+
+
 **Actual stack:** Vite + React + TypeScript SPA (client-rendered), React Router.
 Contact form → **Web3Forms** (client-side) → email to `grorithm@gmail.com`.
 **No** Next.js, **no** MongoDB Atlas, **no** `/api/enquiry`, **no** Cal.com `/book`,
