@@ -5,7 +5,7 @@ import { Icon } from './Icon'
 export function Services() {
   return (
     <section id="services" className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32">
-      <span data-parallax="0.12" className="crop-word absolute -right-4 top-2 text-[22vw]">services</span>
+      <span aria-hidden data-parallax="0.12" className="crop-word absolute -right-4 top-2 text-[22vw]">services</span>
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
@@ -64,7 +64,7 @@ function ServiceCard({ service, delay }: { service: S; delay: number }) {
         onClick={() => setFlipped((f) => !f)}
         role="button"
         tabIndex={0}
-        aria-label={`${service.title} — flip for what's included`}
+        aria-expanded={flipped}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()

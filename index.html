@@ -39,9 +39,21 @@
       }
     </script>
 
+    <!-- Preload the LCP hero image so it fetches in parallel with the JS bundle -->
+    <link rel="preload" as="image" href="/img/hero.webp" fetchpriority="high" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Load fonts without blocking render (display=swap shows fallback immediately) -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    </noscript>
     <script>
       // Pre-paint: set theme + arm motion before first paint so content is never gated.
       (function () {

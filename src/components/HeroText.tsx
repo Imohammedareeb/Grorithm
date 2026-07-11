@@ -5,7 +5,7 @@ export function CharReveal({ text, className = '' }: { text: string; className?:
   const motion = document.documentElement.classList.contains('motion-on')
   if (!motion) return <span className={className}>{text}</span>
   return (
-    <span className={className} aria-label={text}>
+    <span className={className} role="img" aria-label={text}>
       {text.split('').map((ch, i) => (
         <span
           key={i}

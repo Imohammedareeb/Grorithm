@@ -4,7 +4,7 @@ export function Belief() {
   return (
     <section id="belief" className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32">
       {/* Giant cropped section word — spelled correctly */}
-      <span data-parallax="0.12" className="crop-word absolute -left-4 top-2 text-[22vw] sm:top-6">belief</span>
+      <span aria-hidden data-parallax="0.12" className="crop-word absolute -left-4 top-2 text-[22vw] sm:top-6">belief</span>
 
       <div className="relative mx-auto max-w-6xl">
         <p data-reveal className="mb-6 font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)]">

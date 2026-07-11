@@ -30,7 +30,7 @@ export function WorkPage() {
           ← Back home
         </Link>
 
-        <span data-parallax="0.1" className="crop-word absolute -right-4 -top-4 text-[20vw]">work</span>
+        <span aria-hidden data-parallax="0.1" className="crop-word absolute -right-4 -top-4 text-[20vw]">work</span>
 
         <p data-reveal className="mb-4 font-semibold uppercase tracking-[0.2em] text-[var(--text-soft)]">
           Portfolio

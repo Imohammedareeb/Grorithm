@@ -82,7 +82,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32">
-      <span data-parallax="0.12" className="crop-word absolute -right-4 top-2 text-[22vw]">contact</span>
+      <span aria-hidden data-parallax="0.12" className="crop-word absolute -right-4 top-2 text-[22vw]">contact</span>
 
       <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div>

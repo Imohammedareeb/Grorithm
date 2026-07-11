@@ -6,7 +6,7 @@ export function Work() {
   const featured = projects.slice(0, 3)
   return (
     <section id="work" className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32">
-      <span data-parallax="0.12" className="crop-word absolute -left-4 top-2 text-[22vw]">work</span>
+      <span aria-hidden data-parallax="0.12" className="crop-word absolute -left-4 top-2 text-[22vw]">work</span>
       <div className="aurora right-[-5rem] top-10 h-72 w-72" aria-hidden />
 
       <div className="relative mx-auto max-w-6xl">

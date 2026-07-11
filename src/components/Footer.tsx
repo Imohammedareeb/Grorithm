@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-[var(--hairline)] px-4 pt-16 sm:px-6">
       {/* Giant cropped wordmark — spelled correctly */}
-      <span className="crop-word pointer-events-none absolute -bottom-[3.5vw] left-1/2 -translate-x-1/2 text-[26vw]">
+      <span aria-hidden className="crop-word pointer-events-none absolute -bottom-[3.5vw] left-1/2 -translate-x-1/2 text-[26vw]">
         grorithm
       </span>
 
