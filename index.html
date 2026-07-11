@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logos/Simplified_Icon_lime.png" />
+    <link rel="apple-touch-icon" href="/logos/Simplified_Icon_lime.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#C6F23D" />
+    <title>Grorithm — Growth, Systemized.</title>
+    <meta name="description" content="Grorithm is a one-team, full-stack growth agency — web development, brand marketing, video editing, SaaS, and automations, run as one connected system." />
+    <link rel="canonical" href="https://grorithm.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Grorithm" />
+    <meta property="og:title" content="Grorithm — Growth, Systemized." />
+    <meta property="og:description" content="One team, full-stack: web, brand, video, SaaS, and automations run as one connected growth system." />
+    <meta property="og:url" content="https://grorithm.com/" />
+    <meta property="og:image" content="https://grorithm.com/logos/Primary_Logo_lime.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Grorithm — Growth, Systemized." />
+    <meta name="twitter:description" content="One team, full-stack: web, brand, video, SaaS, and automations run as one connected growth system." />
+    <meta name="twitter:image" content="https://grorithm.com/logos/Primary_Logo_lime.png" />
+
+    <!-- Organization structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Grorithm",
+        "url": "https://grorithm.com",
+        "logo": "https://grorithm.com/logos/Primary_Logo_lime.png",
+        "description": "One-team, full-stack growth agency — web, brand, video, SaaS, and automations.",
+        "email": "grorithm@gmail.com",
+        "telephone": ["+918805997423", "+917020052862"],
+        "sameAs": ["https://instagram.com/wearegrorithm"]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script>
+      // Pre-paint: set theme + arm motion before first paint so content is never gated.
+      (function () {
+        try {
+          var t = localStorage.getItem('gr-theme');
+          if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', t);
+          var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!reduce) document.documentElement.classList.add('motion-on');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

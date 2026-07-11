@@ -1,0 +1,478 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Design tokens: 3-color system, light + inverted dark ---------- */
+:root {
+  --paper: #f5f5f0;
+  --lime: #c6f23d;
+  --ink: #262626;
+
+  /* semantic (light: Paper base ~60, Ink text ~10, Lime signal ~30) */
+  --bg: var(--paper);
+  --bg-elev: #ffffff;
+  --text: var(--ink);
+  --text-soft: #5a5a54;
+  --hairline: rgba(38, 38, 38, 0.12);
+
+  /* glass — tinted frosted glass, genuinely visible */
+  --glass-bg: rgba(245, 245, 240, 0.68);
+  --glass-tint: rgba(198, 242, 61, 0.06); /* faint lime cast */
+  --glass-border: rgba(38, 38, 38, 0.16);
+  --glass-shadow: 0 12px 34px -12px rgba(38, 38, 38, 0.32);
+}
+
+[data-theme='dark'] {
+  /* Dark mode inverts the ratio: Ink base, Paper text, Lime still signal */
+  --bg: #1c1c1a;
+  --bg-elev: #262626;
+  --text: #f5f5f0;
+  --text-soft: #b8b8b0;
+  --hairline: rgba(245, 245, 240, 0.14);
+
+  --glass-bg: rgba(38, 38, 38, 0.62);
+  --glass-tint: rgba(198, 242, 61, 0.07);
+  --glass-border: rgba(245, 245, 240, 0.18);
+  --glass-shadow: 0 12px 38px -12px rgba(0, 0, 0, 0.6);
+}
+
+* {
+  border-color: var(--hairline);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Manrope', 'General Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+/* ---------- Glass: real backdrop blur, visibly frosted ----------
+   A diagonal sheen + inner top highlight makes the frosting read even when
+   there's little behind it to blur. */
+.glass {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02)),
+    var(--glass-tint), var(--glass-bg);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.glass-strong {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03)),
+    var(--glass-tint), var(--glass-bg);
+  -webkit-backdrop-filter: blur(30px) saturate(170%);
+  backdrop-filter: blur(30px) saturate(170%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+[data-theme='dark'] .glass,
+[data-theme='dark'] .glass-strong {
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+/* Fallback when backdrop-filter unsupported: raise opacity so it never reads flat/transparent */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass,
+  .glass-strong {
+    background: var(--bg-elev);
+  }
+}
+
+/* ---------- Motion system: content is NEVER gated ---------- */
+/* Reveal targets are fully visible by default. Only when JS arms motion
+   (html.motion-on) do they start hidden and animate in. */
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+html.motion-on [data-reveal]:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(22px);
+}
+html.motion-on [data-reveal] {
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.motion-on [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Reusable brand bits ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.85rem 1.4rem;
+  line-height: 1;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+html.motion-on .btn:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+[data-theme='dark'] .btn-primary {
+  background: var(--lime);
+  color: var(--ink);
+}
+.btn-lime {
+  background: var(--lime);
+  color: var(--ink);
+}
+.btn-ghost {
+  border: 1px solid var(--text);
+  color: var(--text);
+}
+
+.hairline {
+  border-color: var(--hairline);
+}
+
+/* Giant cropped section word */
+.crop-word {
+  font-family: 'Archivo Black', sans-serif;
+  text-transform: lowercase;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Dotted texture — ONLY used inside the dark trust block */
+.dotted-map {
+  background-image: radial-gradient(rgba(245, 245, 240, 0.16) 1.4px, transparent 1.4px);
+  background-size: 20px 20px;
+}
+
+/* ---------- Interactive / hover animations ---------- */
+
+/* Media zoom on hover (images + cover art) */
+.media-zoom {
+  overflow: hidden;
+}
+.media-zoom > * {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+html.motion-on .group:hover .media-zoom > * {
+  transform: scale(1.08);
+}
+
+/* Inner image parallax — drifts with cursor (uses --tx/--ty from TiltCard) */
+.img-parallax > * {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+html.motion-on .group:hover .img-parallax > * {
+  transform: scale(1.1) translate(var(--tx, 0), var(--ty, 0));
+  transition: transform 0.1s linear;
+}
+
+/* 3D tilt card — JS sets --rx/--ry/--mx/--my on hover */
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+}
+html:not(.motion-on) .tilt {
+  transform: none;
+}
+
+/* Glass spotlight that follows the cursor across a card */
+.spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(198, 242, 61, 0.18),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+html.motion-on .group:hover .spotlight::after {
+  opacity: 1;
+}
+
+/* Frosted glass card variant (more glass, everywhere it's wanted) */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02)),
+    var(--glass-tint), var(--glass-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass-card {
+    background: var(--bg-elev);
+  }
+}
+
+/* Animated lime aurora blobs for section backgrounds (very subtle) */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+  }
+}
+.aurora {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.5;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(198, 242, 61, 0.55), transparent 70%);
+}
+html.motion-on .aurora {
+  animation: floaty 14s ease-in-out infinite;
+}
+
+/* Pill tag chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  padding: 0.25rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Selected animation set ---------- */
+
+/* Floating bob (hero stat chips) */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+html.motion-on .bob {
+  animation: bob 4.5s ease-in-out infinite;
+}
+
+/* Character reveal (headline) */
+html.motion-on .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  animation: charIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--char-delay, 0ms);
+}
+@keyframes charIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Word-swap headline */
+.wordswap {
+  display: inline-block;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wordswap.out {
+  opacity: 0;
+  transform: translateY(-0.35em);
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  background: var(--lime);
+  z-index: 60;
+  will-change: transform;
+}
+
+/* Custom cursor */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 70;
+  /* centering is handled in JS via transform translate(-50%,-50%) */
+}
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--lime);
+  transition: opacity 0.2s ease;
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--lime);
+  transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, opacity 0.2s ease;
+}
+.cursor-ring.hovering {
+  width: 54px;
+  height: 54px;
+  background: rgba(198, 242, 61, 0.12);
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+/* Hide the native cursor only on fine-pointer desktops with motion on */
+@media (hover: hover) and (pointer: fine) {
+  html.motion-on,
+  html.motion-on a,
+  html.motion-on button,
+  html.motion-on [role='button'],
+  html.motion-on label {
+    cursor: none;
+  }
+}
+
+/* Page transition */
+html.motion-on .route-fade {
+  animation: routeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes routeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Flip card (services) */
+.flip {
+  perspective: 1200px;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.motion-on .flip:hover .flip-inner,
+html.motion-on .flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+/* Touch devices: don't rely on hover — points also shown on the front (see JSX) */
+
+/* Animated gradient border glow (hover) */
+.glow-border {
+  position: relative;
+}
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(120deg, transparent 20%, var(--lime), transparent 80%);
+  background-size: 220% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+html.motion-on .group:hover .glow-border::before {
+  opacity: 1;
+  animation: glowSweep 1.8s linear infinite;
+}
+@keyframes glowSweep {
+  to {
+    background-position: 220% 0;
+  }
+}
+
+/* Underline sweep for links */
+.link-sweep {
+  position: relative;
+}
+.link-sweep::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--lime);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-sweep:hover::after,
+.link-sweep.nav-active::after {
+  transform: scaleX(1);
+}
