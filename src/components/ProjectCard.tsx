@@ -14,7 +14,7 @@ export function ProjectCard({ project, delay = 0 }: { project: Project; delay?: 
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="glass-card absolute right-3 top-3 z-20 rounded-full px-3 py-1.5 text-xs font-bold text-[var(--text)] transition-transform duration-300 hover:-translate-y-0.5"
+              className="glass-card absolute right-3 top-3 z-20 rounded-full px-3 py-1.5 text-xs font-bold text-lime transition-transform duration-300 hover:-translate-y-0.5"
               aria-label={`Open ${project.title} live site in a new tab`}
             >
               live ↗
