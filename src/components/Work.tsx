@@ -2,8 +2,13 @@ import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
 import { ProjectCard } from './ProjectCard'
 
+// Hand-picked trio for the landing — three distinct categories, not three of a kind.
+const LANDING_SLUGS = ['9th-milky-way-villa', 'emmortal-erp', 'hubertix']
+
 export function Work() {
-  const featured = projects.slice(0, 3)
+  const featured = LANDING_SLUGS.map((s) => projects.find((p) => p.slug === s)).filter(
+    (p): p is (typeof projects)[number] => Boolean(p)
+  )
   return (
     <section id="work" className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32">
       <span aria-hidden data-parallax="0.12" className="crop-word absolute -left-4 top-2 text-[22vw]">work</span>

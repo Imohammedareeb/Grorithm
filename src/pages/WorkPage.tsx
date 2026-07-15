@@ -39,8 +39,7 @@ export function WorkPage() {
           The system, in the wild.
         </h1>
         <p data-reveal className="mt-5 max-w-xl text-lg text-[var(--text-soft)]">
-          A living portfolio. Swap the samples for your real projects — each one links to a full
-          case study.
+          Real work, shipped end to end — each project links to a full case study and its live site.
         </p>
 
         {/* Filter chips — filter by tag */}

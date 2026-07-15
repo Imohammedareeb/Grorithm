@@ -49,7 +49,11 @@ export function ProjectPage() {
         {/* Hero cover */}
         <div data-reveal className="media-zoom group mt-10 overflow-hidden rounded-card">
           {project.cover ? (
-            <img src={project.cover} alt={project.title} className="h-full w-full object-cover" />
+            <img
+              src={project.cover}
+              alt={project.title}
+              className="aspect-[16/9] w-full object-cover object-top"
+            />
           ) : (
             <CoverArt seed={project.seed} className="aspect-[16/9] w-full" label={project.title} />
           )}
