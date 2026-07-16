@@ -10,7 +10,7 @@ const items = [
 export function Marquee() {
   const row = [...items, ...items]
   return (
-    <div className="border-y border-[var(--hairline)] bg-lime py-4 text-ink">
+    <div className="overflow-hidden border-y border-[var(--hairline)] bg-lime py-4 text-ink">
       {/* bg-lime repeated on the animated row so a11y tooling resolves contrast
           through the transform (ink-on-lime, ~11:1) */}
       <div className="flex w-max animate-marquee bg-lime text-ink">
